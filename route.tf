@@ -1,7 +1,7 @@
 resource "aws_route_table" "public" {
   vpc_id = aws_vpc.vpc.id
   tags = {
-    Name        = "${var.name}-${var.availability_zone[count.index]}"
+    Name        = "${var.name}-public"
     Project     = var.project    
     Environment = var.environment
     Terraform   = "Managed"
@@ -11,7 +11,7 @@ resource "aws_route_table" "public" {
 resource "aws_route_table" "private" {
   vpc_id = aws_vpc.vpc.id
   tags = {
-    Name        = "${var.name}-${var.availability_zone[count.index]}"
+    Name        = "${var.name}-private"
     Project     = var.project    
     Environment = var.environment
     Terraform   = "Managed"

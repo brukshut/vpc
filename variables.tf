@@ -3,13 +3,22 @@ variable "availability_zone" {
   type        = list(string)
 }
 
-variable "environment" {
-  default = "gturn"
+variable "instance_tenancy" {
+  default = "default"
 }
 
-variable "nat_gateway" {
+variable "enable_dns_hostnames" {
+  type    = bool
+  default = false
+}
+
+variable "enable_dns_support" {
   type    = bool
   default = true
+}
+
+variable "environment" {
+  default = "gturn"
 }
 
 variable "internet_gateway" {
@@ -18,6 +27,11 @@ variable "internet_gateway" {
 }
 
 variable "name" {}
+
+variable "nat_gateway" {
+  type    = bool
+  default = true
+}
 
 variable "project" {
   default = "gturn"

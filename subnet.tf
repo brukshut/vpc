@@ -6,7 +6,7 @@ resource "aws_subnet" "public" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name        = "${var.name}-${var.availability_zone[count.index]}"
+    Name        = "${var.name}-public-${var.availability_zone[count.index]}"
     Project     = var.project    
     Environment = var.environment
     Terraform   = "Managed"
@@ -21,7 +21,7 @@ resource "aws_subnet" "private" {
   map_public_ip_on_launch = false
 
   tags = {
-    Name        = "${var.name}-${var.availability_zone[count.index]}"
+    Name        = "${var.name}-private-${var.availability_zone[count.index]}"
     Project     = var.project    
     Environment = var.environment
     Terraform   = "Managed"
