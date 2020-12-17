@@ -1,7 +1,7 @@
 resource "aws_route_table" "public" {
   vpc_id = aws_vpc.vpc.id
   tags = {
-    Name        = "${var.name}-${var.availability_zone[count.index]}"
+    Name        = "${var.name}-public"
     Project     = var.project    
     Environment = var.environment
     Terraform   = "Managed"
@@ -11,21 +11,22 @@ resource "aws_route_table" "public" {
 resource "aws_route_table" "private" {
   vpc_id = aws_vpc.vpc.id
   tags = {
-    Name        = "${var.name}-${var.availability_zone[count.index]}"
+    Name        = "${var.name}-private"
     Project     = var.project    
     Environment = var.environment
     Terraform   = "Managed"
   }  
 }
 
+
 resource "aws_route_table_association" "public" {
-  count          = length(var.public_subnet_cidr)
-  subnet_id      = element(aws_subnet.public.*.id, count.index)
+  count          = length([for v in aws_subnet.public : v.id])
+  subnet_id      = element([for v in aws_subnet.public : v.id], count.index)
   route_table_id = aws_route_table.public.id
 }
 
 resource "aws_route_table_association" "private" {
-  count          = length(var.private_subnet_cidr)
-  subnet_id      = element(aws_subnet.private.*.id, count.index)
+  count          = length([for v in aws_subnet.private : v.id])
+  subnet_id      = element([for v in aws_subnet.private : v.id], count.index)
   route_table_id = aws_route_table.private.id
 }

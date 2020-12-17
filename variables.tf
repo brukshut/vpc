@@ -1,15 +1,19 @@
-variable "availability_zone" {
-  description = "list of availability zones"
-  type        = list(string)
+variable "instance_tenancy" {
+  default = "default"
+}
+
+variable "enable_dns_hostnames" {
+  type    = bool
+  default = false
+}
+
+variable "enable_dns_support" {
+  type    = bool
+  default = true
 }
 
 variable "environment" {
   default = "gturn"
-}
-
-variable "nat_gateway" {
-  type    = bool
-  default = true
 }
 
 variable "internet_gateway" {
@@ -19,18 +23,23 @@ variable "internet_gateway" {
 
 variable "name" {}
 
+variable "nat_gateway" {
+  type    = bool
+  default = true
+}
+
 variable "project" {
   default = "gturn"
 }
 
-variable "private_subnet_cidr" {
-  description = "list of private subnet cidr blocks"
-  type        = list(string)
+variable "private_subnets" {
+  description = "map of private subnet cidr blocks to availibility zones"
+  type        = map
 }
 
-variable "public_subnet_cidr" {
-  description = "list of private subnet cidr blocks"
-  type        = list(string)
+variable "public_subnets" {
+  description = "map of public subnet cidr blocks to availibility zones"
+  type        = map
 }
 
 variable "vpc_cidr" {}

@@ -1,21 +1,10 @@
-output "bastion_ip" {
-  value = aws_instance.proxy.public_ip
-}
-
-output "proxy_ip" {
-  value = aws_instance.proxy.private_ip
-}
-
-output "builder_ip" {
-  value = aws_instance.builder.private_ip
-}
 
 output "private_subnets" {
-  value = aws_subnet.private.*.id
+  value = zipmap([for v in aws_subnet.private : v.id], [for v in aws_subnet.private : v.availability_zone])
 }
 
 output "public_subnets" {
-  value = aws_subnet.public.*.id
+  value = zipmap([for v in aws_subnet.public : v.id], [for v in aws_subnet.public : v.availability_zone])
 }
 
 output "vpc_id" {
