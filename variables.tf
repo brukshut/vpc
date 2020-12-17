@@ -1,8 +1,3 @@
-variable "availability_zone" {
-  description = "list of availability zones"
-  type        = list(string)
-}
-
 variable "instance_tenancy" {
   default = "default"
 }
@@ -37,14 +32,14 @@ variable "project" {
   default = "gturn"
 }
 
-variable "private_subnet_cidr" {
-  description = "list of private subnet cidr blocks"
-  type        = list(string)
+variable "private_subnets" {
+  description = "map of private subnet cidr blocks to availibility zones"
+  type        = map
 }
 
-variable "public_subnet_cidr" {
-  description = "list of private subnet cidr blocks"
-  type        = list(string)
+variable "public_subnets" {
+  description = "map of public subnet cidr blocks to availibility zones"
+  type        = map
 }
 
 variable "vpc_cidr" {}

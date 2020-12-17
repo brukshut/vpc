@@ -7,10 +7,6 @@ resource "aws_internet_gateway" "gateway" {
     Environment = var.environment
     Terraform   = "Managed"
   }
-
-  lifecycle {
-    create_before_destroy = true
-  }
 }
 
 resource "aws_route" "gateway" {

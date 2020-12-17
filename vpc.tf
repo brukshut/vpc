@@ -4,10 +4,6 @@ resource "aws_vpc" "vpc" {
   enable_dns_support   = var.enable_dns_support
   enable_dns_hostnames = var.enable_dns_hostnames
 
-  lifecycle {
-    create_before_destroy = true
-  }
-
   tags = {
     Name        = var.name
     Project     = var.project    

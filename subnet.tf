@@ -1,12 +1,12 @@
 resource "aws_subnet" "public" {
+  for_each                = var.public_subnets
   vpc_id                  = aws_vpc.vpc.id
-  cidr_block              = var.public_subnet_cidr[count.index]
-  availability_zone       = var.availability_zone[count.index]
-  count                   = length(var.public_subnet_cidr)
+  cidr_block              = each.key
+  availability_zone       = each.value
   map_public_ip_on_launch = true
 
   tags = {
-    Name        = "${var.name}-public-${var.availability_zone[count.index]}"
+    Name        = "${var.name}-public-${each.value}"
     Project     = var.project    
     Environment = var.environment
     Terraform   = "Managed"
@@ -14,14 +14,14 @@ resource "aws_subnet" "public" {
 }
 
 resource "aws_subnet" "private" {
+  for_each                = var.private_subnets
   vpc_id                  = aws_vpc.vpc.id
-  cidr_block              = var.private_subnet_cidr[count.index]
-  availability_zone       = var.availability_zone[count.index]
-  count                   = length(var.private_subnet_cidr)
+  cidr_block              = each.key
+  availability_zone       = each.value
   map_public_ip_on_launch = false
 
   tags = {
-    Name        = "${var.name}-private-${var.availability_zone[count.index]}"
+    Name        = "${var.name}-private-${each.value}"
     Project     = var.project    
     Environment = var.environment
     Terraform   = "Managed"
