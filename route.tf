@@ -1,5 +1,6 @@
 resource "aws_route_table" "public" {
   vpc_id = aws_vpc.vpc.id
+
   tags = {
     Name        = "${var.name}-public"
     Project     = var.project    
@@ -10,6 +11,7 @@ resource "aws_route_table" "public" {
 
 resource "aws_route_table" "private" {
   vpc_id = aws_vpc.vpc.id
+
   tags = {
     Name        = "${var.name}-private"
     Project     = var.project    
@@ -17,7 +19,6 @@ resource "aws_route_table" "private" {
     Terraform   = "Managed"
   }  
 }
-
 
 resource "aws_route_table_association" "public" {
   count          = length([for v in aws_subnet.public : v.id])
