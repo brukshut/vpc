@@ -1,3 +1,8 @@
+locals {
+  public_cidr  = keys(var.public_subnets)
+  private_cidr = keys(var.private_subnets)
+}
+
 resource "aws_subnet" "public" {
   for_each                = var.public_subnets
   vpc_id                  = aws_vpc.vpc.id
@@ -6,7 +11,7 @@ resource "aws_subnet" "public" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name        = "${var.name}-public-${each.value}"
+    Name        = "${var.name}-public-${index(local.public_cidr, each.key)}"
     Project     = var.project    
     Environment = var.environment
     Terraform   = "Managed"
@@ -21,7 +26,7 @@ resource "aws_subnet" "private" {
   map_public_ip_on_launch = false
 
   tags = {
-    Name        = "${var.name}-private-${each.value}"
+    Name        = "${var.name}-private-${index(local.private_cidr, each.key)}"
     Project     = var.project    
     Environment = var.environment
     Terraform   = "Managed"
