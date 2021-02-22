@@ -25,3 +25,7 @@ output "public_subnets" {
 output "vpc_id" {
   value = aws_vpc.vpc.id
 }
+
+output "zone_id" {
+  value = var.enable_internal_dns ? aws_route53_zone.zone[0].id : null
+}
