@@ -12,8 +12,20 @@ variable "enable_dns_support" {
   default = true
 }
 
+variable "enable_internal_dns" {
+  description = "create private route53 zone for vpc"
+  type        = bool
+  default     = false
+}
+
 variable "environment" {
   default = "gturn"
+}
+
+variable "internal_zone_name" {
+  description = "name of internal route53 zone"
+  type        = string
+  default     = null  
 }
 
 variable "internet_gateway" {
