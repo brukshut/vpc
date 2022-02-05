@@ -2,13 +2,7 @@
 resource "aws_eip" "eip" {
   count = var.nat_gateway ? 1 : 0
   vpc   = true
-
-  tags = {
-    Name        = var.name
-    Project     = var.project    
-    Environment = var.environment
-    Terraform   = "Managed"
-  }
+  tags  = local.tags
 }
 
 // nat_gateways are expensive, so allocate a single
@@ -17,13 +11,7 @@ resource "aws_nat_gateway" "nat_gateway" {
   count         = var.nat_gateway ? 1 : 0
   allocation_id = aws_eip.eip[0].id
   subnet_id     = element([for v in aws_subnet.public : v.id], 0)
-
-  tags = {
-    Name        = var.name
-    Project     = var.project    
-    Environment = var.environment
-    Terraform   = "Managed"
-  }
+  tags          = local.tags
 }
 
 resource "aws_route" "nat" {

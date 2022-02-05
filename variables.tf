@@ -18,14 +18,10 @@ variable "enable_internal_dns" {
   default     = false
 }
 
-variable "environment" {
-  default = "gturn"
-}
-
 variable "internal_zone_name" {
   description = "name of internal route53 zone"
   type        = string
-  default     = null  
+  default     = null
 }
 
 variable "internet_gateway" {
@@ -40,18 +36,38 @@ variable "nat_gateway" {
   default = true
 }
 
-variable "project" {
-  default = "gturn"
-}
-
 variable "private_subnets" {
   description = "map of private subnet cidr blocks to availibility zones"
-  type        = map
+  type        = map(any)
+}
+
+variable "private_subnet_tags" {
+  description = "additional private subnet tags"
+  default     = null
+  type        = map(string)
 }
 
 variable "public_subnets" {
   description = "map of public subnet cidr blocks to availibility zones"
-  type        = map
+  type        = map(string)
+}
+
+variable "public_subnet_tags" {
+  description = "additional public subnet tags"
+  default     = null
+  type        = map(string)
+}
+
+variable "tags" {
+  description = "standard set of tags"
+  type        = map(string)
+  default = {
+    "Terraform" = "Managed"
+  }
 }
 
 variable "vpc_cidr" {}
+
+locals {
+  tags = merge(var.tags, { "Name" = var.name, "Timestamp" = timestamp() })
+}

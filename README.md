@@ -23,5 +23,10 @@ module "gturn_vpc" {
   internal_zone_name   = "foobar.nt"
   nat_gateway          = false
   internet_gateway     = true
+
+  tags = {
+    "Environment" = "Test",
+    "Project"     = "Foobar"
+  }
 }
 ```

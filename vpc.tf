@@ -3,11 +3,5 @@ resource "aws_vpc" "vpc" {
   instance_tenancy     = var.instance_tenancy
   enable_dns_support   = var.enable_dns_support
   enable_dns_hostnames = var.enable_dns_hostnames
-
-  tags = {
-    Name        = var.name
-    Project     = var.project    
-    Environment = var.environment
-    Terraform   = "Managed"
-  }
+  tags                 = local.tags
 }

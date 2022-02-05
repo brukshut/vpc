@@ -1,13 +1,7 @@
 resource "aws_internet_gateway" "gateway" {
   count  = var.internet_gateway ? 1 : 0
   vpc_id = aws_vpc.vpc.id
-
-  tags = {
-    Name        = var.name
-    Project     = var.project    
-    Environment = var.environment
-    Terraform   = "Managed"
-  }
+  tags   = local.tags
 }
 
 resource "aws_route" "gateway" {
