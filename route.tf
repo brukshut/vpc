@@ -1,23 +1,11 @@
 resource "aws_route_table" "public" {
   vpc_id = aws_vpc.vpc.id
-
-  tags = {
-    Name        = "${var.name}-public"
-    Project     = var.project    
-    Environment = var.environment
-    Terraform   = "Managed"
-  }  
+  tags   = local.tags
 }
 
 resource "aws_route_table" "private" {
   vpc_id = aws_vpc.vpc.id
-
-  tags = {
-    Name        = "${var.name}-private"
-    Project     = var.project    
-    Environment = var.environment
-    Terraform   = "Managed"
-  }  
+  tags   = local.tags
 }
 
 resource "aws_route_table_association" "public" {
