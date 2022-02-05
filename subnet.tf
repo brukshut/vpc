@@ -10,12 +10,9 @@ resource "aws_subnet" "public" {
   availability_zone       = each.value
   map_public_ip_on_launch = true
 
-  tags = {
-    Name        = "${var.name}-public-${index(local.public_cidr, each.key)}"
-    Project     = var.project    
-    Environment = var.environment
-    Terraform   = "Managed"
-  }
+  tags = merge(local.tags, var.public_subnet_tags,
+    { "Name" = "${var.name}-public-${index(local.public_cidr, each.key)}" })
+
 }
 
 resource "aws_subnet" "private" {
@@ -25,10 +22,6 @@ resource "aws_subnet" "private" {
   availability_zone       = each.value
   map_public_ip_on_launch = false
 
-  tags = {
-    Name        = "${var.name}-private-${index(local.private_cidr, each.key)}"
-    Project     = var.project    
-    Environment = var.environment
-    Terraform   = "Managed"
-  }
+  tags = merge(local.tags, var.private_subnet_tags,
+    { "Name" = "${var.name}-private-${index(local.private_cidr, each.key)}" })
 }
